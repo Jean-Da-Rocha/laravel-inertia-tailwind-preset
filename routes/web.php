@@ -13,6 +13,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return inertia('Test');
+Route::middleware('guest')->group(function () {
+    Route::get('/', fn () => to_route('login'));
 });
