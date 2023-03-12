@@ -1,5 +1,20 @@
 <script setup lang="ts">
-import { Link } from '@inertiajs/vue3';
+import { Link, useForm } from '@inertiajs/vue3';
+import route from 'ziggy-js';
+import Label from '@/Components/Label.vue';
+import Input from '@/Components/Input.vue';
+
+const form = useForm<{
+  email: String | null;
+  password: String | null;
+  remember_me: Boolean | null;
+}>({
+  email: null,
+  password: null,
+  remember_me: null,
+});
+
+const submit = () => form.post(route('login'));
 </script>
 
 <template>
@@ -10,15 +25,15 @@ import { Link } from '@inertiajs/vue3';
           <h1 class="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl">
             Sign in to your account
           </h1>
-          <form class="space-y-4 md:space-y-6" action="#">
+          <form class="space-y-4 md:space-y-6" @submit.prevent="submit">
             <div>
-              <label for="email" class="block mb-2 text-sm font-medium text-gray-900 e">Your email</label>
-              <input
-                type="email"
-                name="email"
-                id="email"
-                class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-indigo-600 focus:border-indigo-600 block w-full p-2.5"
-                placeholder="name@company.com"
+              <Label for="email" :has-error="form.errors.email">Email</Label>
+              <Input
+                input-name="email"
+                input-type="email"
+                :input-error-message="form.errors.email"
+                v-model="form.email"
+                placeholder="your@email.com"
                 :required="true"
               />
             </div>
@@ -30,6 +45,7 @@ import { Link } from '@inertiajs/vue3';
                 id="password"
                 placeholder="••••••••"
                 class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-indigo-600 focus:border-indigo-600 block w-full p-2.5"
+                v-model="form.password"
                 :required="true"
               />
             </div>
@@ -41,6 +57,7 @@ import { Link } from '@inertiajs/vue3';
                     aria-describedby="remember"
                     type="checkbox"
                     class="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-indigo-300 checked:bg-indigo-600"
+                    v-model="form.remember_me"
                     :required="false"
                   />
                 </div>
@@ -52,15 +69,14 @@ import { Link } from '@inertiajs/vue3';
             </div>
             <button
               type="submit"
-              class="w-full text-white bg-indigo-600 hover:bg-indigo-700 focus:ring-4 focus:outline-none focus:ring-indigo-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-indigo-600 dark:hover:bg-indigo-700 dark:focus:ring-indigo-800"
+              class="w-full text-white bg-indigo-600 hover:bg-indigo-700 focus:ring-4 focus:outline-none focus:ring-indigo-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
+              :disabled="form.processing"
             >
               Sign in
             </button>
             <p class="text-sm font-light text-gray-500 dark:text-gray-400">
               Don't have an account yet?
-              <Link :href="route('register')" class="font-medium text-indigo-600 hover:underline dark:text-indigo-500">
-                Sign up
-              </Link>
+              <Link :href="route('register')" class="font-medium text-indigo-600 hover:underline">Sign up</Link>
             </p>
           </form>
         </div>

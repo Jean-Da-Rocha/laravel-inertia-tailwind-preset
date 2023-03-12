@@ -2,9 +2,7 @@
 import { onMounted } from 'vue';
 import { initFlowbite } from 'flowbite';
 
-onMounted(() => {
-  initFlowbite();
-});
+onMounted(() => initFlowbite);
 </script>
 
 <template>
