@@ -2,7 +2,7 @@
 import { PropType } from 'vue';
 
 const props = defineProps({
-  hasError: String as PropType<string>,
+  inputErrorMessage: String as PropType<string>,
   for: String as PropType<string>,
 });
 </script>
@@ -11,7 +11,7 @@ const props = defineProps({
   <label
     :for="props.for"
     class="block mb-2 text-sm font-medium text-gray-900"
-    :class="props.hasError && 'block mb-2 text-sm font-medium text-red-700'"
+    :class="props.inputErrorMessage && 'block mb-2 text-sm font-medium text-red-700'"
   >
     <slot></slot>
   </label>

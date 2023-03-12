@@ -16,3 +16,7 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('guest')->group(function () {
     Route::get('/', fn () => to_route('login'));
 });
+
+Route::middleware('auth')->group(function () {
+    Route::get('/home', fn () => inertia('Authenticated'));
+});

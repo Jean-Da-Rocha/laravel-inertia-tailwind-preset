@@ -3,7 +3,7 @@ import { PropType } from 'vue';
 
 const props = defineProps({
   modelValue: {
-    type: String as PropType<string>,
+    type: [String, null] as PropType<string | null>,
   },
   inputType: {
     type: String as PropType<'text' | 'password' | 'email'>,
